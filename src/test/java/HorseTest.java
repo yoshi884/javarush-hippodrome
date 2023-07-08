@@ -1,5 +1,8 @@
+import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.Spy;
@@ -14,7 +17,7 @@ import static org.mockito.Mockito.times;
 class HorseTest {
 
     @Test
-    void constructorTest() {
+    void nullNameTest() {
         Throwable nullName = assertThrows(
                 IllegalArgumentException.class,
                 () -> {
@@ -23,22 +26,10 @@ class HorseTest {
         );
         assertEquals("Name cannot be null.", nullName.getMessage());
 
-        Throwable emptyName = assertThrows(
-                IllegalArgumentException.class,
-                () -> {
-                    Horse horse = new Horse(" ", 1, 1);
-                }
-        );
-        assertEquals("Name cannot be blank.", emptyName.getMessage());
+    }
 
-        Throwable speedContainsNegativeNumber = assertThrows(
-                IllegalArgumentException.class,
-                () -> {
-                    Horse horse = new Horse("Jorik", -1, 1);
-                }
-        );
-        assertEquals("Speed cannot be negative.", speedContainsNegativeNumber.getMessage());
-
+    @Test
+    void negativeDistanceTest(){
         Throwable distanceContainsNegativeNumber = assertThrows(
                 IllegalArgumentException.class,
                 () -> {
@@ -46,25 +37,47 @@ class HorseTest {
                 }
         );
         assertEquals("Distance cannot be negative.", distanceContainsNegativeNumber.getMessage());
-
-    }
-
-
-    @Test
-    void getName() {
-        Horse horse = Mockito.spy(new Horse("Jesika", 1, 1));
-        assertEquals("Jesika", horse.getName());
-
     }
 
     @Test
-    void getSpeed() {
+    void negativeSpeedTest(){
+        Throwable speedContainsNegativeNumber = assertThrows(
+                IllegalArgumentException.class,
+                () -> {
+                    Horse horse = new Horse("Jorik", -1, 1);
+                }
+        );
+        assertEquals("Speed cannot be negative.", speedContainsNegativeNumber.getMessage());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"", "  " , "\t" , "\r" , "\n" , "\f" , "  "})
+    void  blankNameTest(String input){
+        Throwable emptyName = assertThrows(
+                IllegalArgumentException.class,
+                () -> {
+                    Horse horse = new Horse(input, 1, 1);
+                }
+        );
+        assertEquals("Name cannot be blank.", emptyName.getMessage());
+    }
+
+
+    @ParameterizedTest
+    @ValueSource(strings = {"Jesika", "H" , "oooooops" , "James Statham"})
+    void getNameTest(String args) {
+        Horse horse = Mockito.spy(new Horse(args, 1, 1));
+        assertEquals(args, horse.getName());
+    }
+
+    @Test
+    void getSpeedTest() {
         Horse horse = Mockito.spy(new Horse("Jesika", 1, 1));
         assertEquals(1, horse.getSpeed());
     }
 
     @Test
-    void getDistance() {
+    void getDistanceTest() {
         Horse horse = Mockito.spy(new Horse("Jesika", 1, 2));
         assertEquals(2, horse.getDistance());
 
@@ -73,7 +86,7 @@ class HorseTest {
     }
 
     @Test
-    void move() {
+    void moveTest() {
         try(MockedStatic<Horse> mockedHorse = mockStatic(Horse.class)) {
             Horse horse = new Horse("Kirim" , 1 ,2);
             horse.move();

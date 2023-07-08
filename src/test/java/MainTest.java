@@ -8,6 +8,8 @@ class MainTest {
 
     @Test
     @Timeout(22)
-    void main() {
+    void main() throws Exception {
+        String[] args = null;
+        Main.main(args);
     }
 }
