@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class Horse {
-    Logger logger = LoggerFactory.getLogger("[Horse]");
+    public static final Logger logger = LoggerFactory.getLogger("[Horse]");
     private final String name;
     private final double speed;
     private double distance;

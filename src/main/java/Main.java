@@ -6,8 +6,8 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 
 public class Main {
+    public static final Logger logger = LoggerFactory.getLogger("[MAIN]");
     public static void main(String[] args) throws Exception {
-        Logger logger = LoggerFactory.getLogger("[MAIN]");
         List<Horse> horses = List.of(
                 new Horse("Кто-то там", 2.4),
                 new Horse("Туз Пик", 2.5),

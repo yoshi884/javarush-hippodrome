@@ -1,6 +1,5 @@
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +32,7 @@ class HippodromeTest {
     void getHorsesTest() {
         ArrayList horses = new ArrayList(30);
         for (int i = 0; i < 30; i++) {
-            horses.add(new Horse("Horse", 1, 1));
+            horses.add(new Horse("Horse #" + i, 1 + i, 1 + i));
         }
         Hippodrome hippodrome = new Hippodrome(horses);
 
@@ -68,6 +67,6 @@ class HippodromeTest {
 
         Hippodrome hippodrome = new Hippodrome(horses);
 
-        assertEquals(fasterHorse , hippodrome.getWinner());
+        assertSame(fasterHorse , hippodrome.getWinner());
     }
 }

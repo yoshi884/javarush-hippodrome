@@ -1,17 +1,14 @@
-import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.times;
 
 @ExtendWith(MockitoExtension.class)
 class HorseTest {
@@ -92,8 +89,6 @@ class HorseTest {
             horse.move();
 
             mockedHorse.verify(() ->Horse.getRandomDouble(0.2,0.9));
-
-
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
